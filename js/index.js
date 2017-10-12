@@ -2,7 +2,6 @@
 	console.log(log);
 }
 let data = {
-	title: 'List to run!',
 	todo: [
 		{
 			name: 'Wash the floor'
@@ -11,7 +10,16 @@ let data = {
 			name: 'Clean the dishes'
 		},
 		{
-			name: 'To water flowers'
+			name: 'Learn React'
+		},
+		{
+			name: 'Shadow DOM'
+		},
+		{
+			name: 'Help older brother'
+		},
+		{
+			name: 'Help my father'
 		}
 	]
 }
@@ -19,9 +27,8 @@ class Todo extends React.Component{
 	constructor(props){
 		super(props);
 		this.state = {
-			title: this.props.data.title,
 			items: this.props.data.todo,
-			inputValue: 'I need to...'
+			inputValue: ''
 		}
 		this.addToList = this.addToList.bind(this);
 		this.changeValue = this.changeValue.bind(this);
@@ -42,19 +49,26 @@ class Todo extends React.Component{
 			inputValue: e.target.value
 		})
 	}
-	deleteItem(item){
-		let currentItems = this.state.items;
-		currentItems.splice(item, 1);
+	deleteItem(i){
+		let array = this.state.items.slice();
+		array.splice(i, 1);
 		this.setState({
-			items: currentItems
+			items: array
 		})
+		// this.setState({
+		// 	items: this.state.items.splice(item, 1)
+		// })
+		log(array);
+		//log(currentItems.indexOf(item));
+		//log(item.name);
 	}
 	render(){
+		let that = this;
 		// <span><i className="material-icons">close</i></span>
 		return(
 			<div className="jumbotron">
 				<div className="container">
-					<h1 className="mb-5">React Todo Application</h1>
+					<h1 className="mb-5 text-primary">React Todo Application</h1>
 					<div className="row">
 						<div className="col-12 col-sm-6">
 							<h3 className="mb-2">{this.state.title}</h3>
@@ -62,8 +76,8 @@ class Todo extends React.Component{
 								{this.state.items.map(function(item, i){
 									return(
 										<li className="list-group-item list-group-item_flex" key={i}>
-											<span><span className="font-weight-bold">{i+1}</span>. {item.name}</span>
-											<span onClick={this.deleteItem}><i className="material-icons">close</i></span>
+											<span><span className="font-weight-bold">{i}</span>. {item.name}</span>
+											<span onClick={()=>{that.deleteItem(i)}}><i className="material-icons">close</i></span>
 										</li>
 									)
 								}.bind(this))}
@@ -73,7 +87,7 @@ class Todo extends React.Component{
 							<h3 className="mb-2">You can add more items to your list.</h3>
 							<form onSubmit={this.addToList}>
 								<div className="input-group">
-									<input type="text" className="form-control" placeholder="Add..." value={this.state.inputValue} onChange={e => this.changeValue(e)}/>
+									<input type="text" className="form-control" placeholder='Add element' value={this.state.inputValue} onChange={this.changeValue}/>
 									<span className="input-group-btn">
 										<button onClick={this.addToList} className="btn btn-primary" type="button">Add item</button>
 									</span>
