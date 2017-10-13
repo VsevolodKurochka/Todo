@@ -43,6 +43,10 @@ class Todo extends React.Component{
 		this.setState({
 			items: newArray
 		})
+		this.clearInput();
+	}
+	clearInput(){
+		this.state.inputValue = '';
 	}
 	changeValue(e){
 		this.setState({
@@ -71,7 +75,7 @@ class Todo extends React.Component{
 					<h1 className="mb-5 text-primary">React Todo Application</h1>
 					<div className="row">
 						<div className="col-12 col-sm-6">
-							<h3 className="mb-2">{this.state.title}</h3>
+							<h3 className="mb-2">List of necessary cases</h3>
 							<ul className="list-group">
 								{this.state.items.map(function(item, i){
 									return(
@@ -80,7 +84,7 @@ class Todo extends React.Component{
 											<span onClick={()=>{that.deleteItem(i)}}><i className="material-icons">close</i></span>
 										</li>
 									)
-								}.bind(this))}
+								})}
 							</ul>
 						</div>
 						<div className="col-12 col-sm-6">
